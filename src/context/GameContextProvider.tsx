@@ -34,11 +34,21 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
   const [gameState, dispatch] = useReducer(gameReducer, INITIAL_STATE, init);
 
   const initGame = () => {
-    const { numbersList, settings } = gameState;
-    const { numbersCount, minNumber, maxNumber } = settings;
-    const newCurrentNumber = getUniqueRandomNumber(numbersList, minNumber, maxNumber);
+    const { numbersCount, minNumber, maxNumber } = gameState.settings;
+    const initialCurrentNumber = Math.floor((Math.random() * maxNumber) + minNumber);
     const initialNumbersList = getInitialNumbersList(numbersCount);
-    dispatch({ type: 'initGame', payload: { newCurrentNumber, initialNumbersList }});
+    dispatch({ type: 'initGame', payload: { initialCurrentNumber, initialNumbersList }});
+  }
+
+  const restartGame = () => {
+    const { numbersCount, minNumber, maxNumber } = gameState.settings;
+    const initialCurrentNumber = Math.floor((Math.random() * maxNumber) + minNumber);
+    const initialNumbersList = getInitialNumbersList(numbersCount);
+    dispatch({ type: 'restartGame', payload: { initialCurrentNumber, initialNumbersList }});
+  }
+
+  const gameSettings = () => {
+    dispatch({ type: 'gameSttings' });
   }
 
   const setSelectableIndex = () => {
@@ -49,9 +59,9 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
 
   const setIndexValue = (index: number) => {
     const { numbersList, currentNumber, settings } = gameState;
-    const { minNumber, maxNumber } = settings;
-    const newCurrentNumber = getUniqueRandomNumber(numbersList, minNumber, maxNumber);
+    const { numbersCount, minNumber, maxNumber } = settings;
     const newNumbersList = replaceIndexValue(index, numbersList, currentNumber);
+    const newCurrentNumber = getUniqueRandomNumber(newNumbersList, minNumber, maxNumber, numbersCount);
     dispatch({ type: 'setIndexValue', payload: { newCurrentNumber, newNumbersList }});
   }
 
@@ -60,6 +70,8 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
       value={{
         gameState,
         initGame,
+        restartGame,
+        gameSettings,
         setSelectableIndex,
         setIndexValue,
       }}

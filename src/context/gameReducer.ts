@@ -1,7 +1,9 @@
 import { GameState, NullableNumberType, SelectabeIndexType } from "../interfaces/interfaces";
 
 type GameAction =
-  | { type: 'initGame', payload: { newCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
+  | { type: 'initGame', payload: { initialCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
+  | { type: 'restartGame', payload: { initialCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
+  | { type: 'gameSttings' }
   | { type: 'setSelectableIndex', payload: { newSelectableIndex: SelectabeIndexType }}
   | { type: 'setIndexValue', payload: { newCurrentNumber: number, newNumbersList: NullableNumberType[] }}
 
@@ -11,8 +13,24 @@ const gameReducer = (state: GameState, action: GameAction) => {
       return {
         ...state,
         initialized: true,
-        currentNumber: action.payload.newCurrentNumber,
+        currentNumber: action.payload.initialCurrentNumber,
         numbersList: action.payload.initialNumbersList,
+      };
+    case 'restartGame':
+      return {
+        ...state,
+        selectableIndex: { minor: -1, major: -1 },
+        currentNumber: action.payload.initialCurrentNumber,
+        numbersList: action.payload.initialNumbersList,
+      };
+    case 'gameSttings':
+      return {
+        ...state,
+        initialized: false,
+        currentNumber: null,
+        numbersList: [],
+        selectableIndex: null,
+        successProbability: null,
       };
     case 'setSelectableIndex':
       return {

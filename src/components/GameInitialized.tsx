@@ -4,7 +4,7 @@ import CardComponent from './CardComponent';
 
 const GameInitialized = () => {
 
-  const { gameState, setSelectableIndex } = useContext(GameContext);
+  const { gameState, restartGame, gameSettings, setSelectableIndex } = useContext(GameContext);
 
   useEffect(() => {
     if (gameState.currentNumber) {
@@ -13,9 +13,11 @@ const GameInitialized = () => {
   }, [gameState.currentNumber]);
   
   return (
-    <div className="container">
-      <h1 className="title">{gameState?.currentNumber || ''}</h1>
-      <div className="wrapper">
+    <section className="container">
+      <div className="current-number">
+        <h2>{gameState?.currentNumber || ''}</h2>
+      </div>
+      <div className="card-wrapper">
         { Array.isArray(gameState.numbersList) && gameState.numbersList.length > 0 && (
           gameState.numbersList.map((value, index) => (
             <CardComponent 
@@ -26,7 +28,15 @@ const GameInitialized = () => {
           ))
         )}
       </div>
-    </div>
+      <div className="button-wrapper">
+        <button className="big-button" onClick={restartGame}>
+          Restart
+        </button>
+        <button className="big-button" onClick={gameSettings}>
+          Settings
+        </button>
+      </div>
+    </section>
   );
 }
 

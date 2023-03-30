@@ -4,6 +4,8 @@ import { GameState } from "../interfaces/interfaces";
 interface GameContextProps {
   gameState: GameState,
   initGame: () => void,
+  restartGame: () => void,
+  gameSettings: () => void,
   setSelectableIndex: () => void,
   setIndexValue: (index: number) => void,
 }

@@ -4,11 +4,12 @@ export const getUniqueRandomNumber = (
   numbersList: NullableNumberType[],
   minNumber: number, 
   maxNumber: number,
+  numbersCount: number,
 ) => {
   let n: number;
   do {
     n = Math.floor((Math.random() * maxNumber) + minNumber);
-  } while (numbersList.includes(n));
+  } while (numbersCount <= maxNumber && numbersList.includes(n));
   return n;
 }
 
@@ -52,11 +53,8 @@ export const replaceIndexValue = (
 }
 
 export const getColumn = (
-  index: number, 
+  index: number,
   length: number,
 ) => {
-  if (index < (length / 2)) {
-    return 'left';
-  }
-  return 'right';
+  return index < (length / 2) ? 'card-left' : 'card-right';
 }

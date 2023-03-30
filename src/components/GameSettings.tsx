@@ -7,7 +7,7 @@ const GameSettings = () => {
 
   return (
     <div className="container">
-      <button onClick={initGame}>
+      <button className="big-button" onClick={initGame}>
         Start Game
       </button>
     </div>

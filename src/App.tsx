@@ -8,14 +8,14 @@ function App() {
   const { gameState } = useContext(GameContext);
   
   return (
-    <div className="main">
-      <h1 className="title">Numbers Game</h1>
+    <main>
+      <h1 className="game-title">Numbers Game</h1>
       { gameState?.initialized ? (
         <GameInitialized />
       ) : (
         <GameSettings />
       )}
-    </div>
+    </main>
   );
 }
 
