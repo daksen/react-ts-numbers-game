@@ -4,13 +4,11 @@ import { GameState } from "../interfaces/interfaces";
 interface GameContextProps {
   gameState: GameState,
   initGame: () => void,
-  restartGame: () => void,
-  gameSettings: () => void,
-  setSelectableIndex: () => void,
   setIndexValue: (index: number) => void,
   setNumberOfCells: (value: number) => void,
   setMinNumberValue: (value: number) => void,
   setMaxNumberValue: (value: number) => void,
+  goToSettings: () => void,
 }
 
 const GameContext = createContext<GameContextProps>({} as GameContextProps);

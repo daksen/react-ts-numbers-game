@@ -1,17 +1,11 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import GameContext from '../context/GameContext';
 import CardComponent from './CardComponent';
 
 const GameInitialized = () => {
 
-  const { gameState, restartGame, gameSettings, setSelectableIndex } = useContext(GameContext);
+  const { gameState, initGame, goToSettings } = useContext(GameContext);
 
-  useEffect(() => {
-    if (gameState.currentNumber) {
-      setSelectableIndex();
-    }
-  }, [gameState.currentNumber]);
-  
   return (
     <section className="container">
       <div className="current-number">
@@ -29,10 +23,10 @@ const GameInitialized = () => {
         )}
       </div>
       <div className="button-wrapper">
-        <button className="big-button" onClick={restartGame}>
+        <button className="big-button" onClick={initGame}>
           Restart
         </button>
-        <button className="big-button" onClick={gameSettings}>
+        <button className="big-button" onClick={goToSettings}>
           Settings
         </button>
       </div>

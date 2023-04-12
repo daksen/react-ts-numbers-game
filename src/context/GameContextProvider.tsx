@@ -45,26 +45,9 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
 
   const initGame = () => {
     const { numberOfCells, minNumberValue, maxNumberValue } = gameState.settings;
-    const initialCurrentNumber = Math.floor((Math.random() * (maxNumberValue - minNumberValue + 1)) + minNumberValue);
     const initialNumbersList = getInitialNumbersList(numberOfCells);
+    const initialCurrentNumber = Math.floor((Math.random() * (maxNumberValue - minNumberValue + 1)) + minNumberValue);
     dispatch({ type: 'initGame', payload: { initialCurrentNumber, initialNumbersList }});
-  }
-
-  const restartGame = () => {
-    const { numberOfCells, minNumberValue, maxNumberValue } = gameState.settings;
-    const initialCurrentNumber = Math.floor((Math.random() * (maxNumberValue - minNumberValue + 1)) + minNumberValue);
-    const initialNumbersList = getInitialNumbersList(numberOfCells);
-    dispatch({ type: 'restartGame', payload: { initialCurrentNumber, initialNumbersList }});
-  }
-
-  const gameSettings = () => {
-    dispatch({ type: 'gameSttings' });
-  }
-
-  const setSelectableIndex = () => {
-    const { numbersList, currentNumber } = gameState;
-    const newSelectableIndex = getSelectableIndex(numbersList, currentNumber);
-    dispatch({ type: 'setSelectableIndex', payload: { newSelectableIndex }});
   }
 
   const setIndexValue = (index: number) => {
@@ -72,7 +55,8 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
     const { numberOfCells, minNumberValue, maxNumberValue } = settings;
     const newNumbersList = replaceIndexValue(index, numbersList, currentNumber);
     const newCurrentNumber = getUniqueRandomNumber(newNumbersList, minNumberValue, maxNumberValue, numberOfCells);
-    dispatch({ type: 'setIndexValue', payload: { newCurrentNumber, newNumbersList }});
+    const newSelectableIndex = getSelectableIndex(newNumbersList, newCurrentNumber);
+    dispatch({ type: 'setIndexValue', payload: { newCurrentNumber, newNumbersList, newSelectableIndex }});
   }
 
   const setNumberOfCells = (value: number) => {
@@ -96,18 +80,20 @@ const GameContextProvider = ({ children }: GameContextProviderProps) => {
     dispatch({ type: 'setSettings', payload: { newSettings }});
   }
 
+  const goToSettings = () => {
+    dispatch({ type: 'goToSettings' });
+  }
+
   return (
     <GameContext.Provider 
       value={{
         gameState,
         initGame,
-        restartGame,
-        gameSettings,
-        setSelectableIndex,
         setIndexValue,
         setNumberOfCells,
         setMinNumberValue,
         setMaxNumberValue,       
+        goToSettings,
       }}
     >
       {children}

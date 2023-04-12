@@ -3,10 +3,9 @@ import { GameState, NullableNumberType, SelectabeIndexType, SettingsType } from 
 type GameAction =
   | { type: 'initGame', payload: { initialCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
   | { type: 'restartGame', payload: { initialCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
-  | { type: 'gameSttings' }
-  | { type: 'setSelectableIndex', payload: { newSelectableIndex: SelectabeIndexType }}
-  | { type: 'setIndexValue', payload: { newCurrentNumber: number, newNumbersList: NullableNumberType[] }}
+  | { type: 'setIndexValue', payload: { newCurrentNumber: number, newNumbersList: NullableNumberType[], newSelectableIndex: SelectabeIndexType }}
   | { type: 'setSettings', payload: { newSettings: SettingsType }}
+  | { type: 'goToSettings' }
 
 const gameReducer = (state: GameState, action: GameAction) => {
   switch (action.type) {
@@ -14,6 +13,7 @@ const gameReducer = (state: GameState, action: GameAction) => {
       return {
         ...state,
         initialized: true,
+        selectableIndex: { minor: -1, major: -1 },
         currentNumber: action.payload.initialCurrentNumber,
         numbersList: action.payload.initialNumbersList,
       };
@@ -24,7 +24,19 @@ const gameReducer = (state: GameState, action: GameAction) => {
         currentNumber: action.payload.initialCurrentNumber,
         numbersList: action.payload.initialNumbersList,
       };
-    case 'gameSttings':
+    case 'setIndexValue':
+      return { 
+        ...state,
+        currentNumber: action.payload.newCurrentNumber,
+        numbersList: action.payload.newNumbersList,
+        selectableIndex: action.payload.newSelectableIndex,
+      }
+    case 'setSettings':
+      return { 
+        ...state,
+        settings: action.payload.newSettings,
+      }
+    case 'goToSettings':
       return {
         ...state,
         initialized: false,
@@ -33,23 +45,6 @@ const gameReducer = (state: GameState, action: GameAction) => {
         selectableIndex: null,
         successProbability: null,
       };
-    case 'setSelectableIndex':
-      return {
-        ...state,
-        selectableIndex: action.payload.newSelectableIndex,
-      }
-    case 'setIndexValue':
-      return { 
-        ...state,
-        selectableIndex: null,
-        currentNumber: action.payload.newCurrentNumber,
-        numbersList: action.payload.newNumbersList,
-      }
-    case 'setSettings':
-      return { 
-        ...state,
-        settings: action.payload.newSettings,
-      }
     default:
       throw new Error('No valid action type.');
   }

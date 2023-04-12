@@ -22,8 +22,9 @@ export const getSelectableIndex = (
   numbersList: NullableNumberType[],
   currentNumber: NullableNumberType,
 ) => {
-  const greaterNumber = (n: NullableNumberType) => n && currentNumber && n > currentNumber;
+  const greaterNumber = (n: NullableNumberType) => n && currentNumber && n >= currentNumber;
   const lowerNumber = (n: NullableNumberType) => n && currentNumber && n < currentNumber;
+  console.log(numbersList.findLastIndex(lowerNumber), numbersList.findIndex(greaterNumber));
   return {
     minor: numbersList.findLastIndex(lowerNumber),
     major: numbersList.findIndex(greaterNumber),
