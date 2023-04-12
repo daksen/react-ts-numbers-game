@@ -57,6 +57,24 @@ main {
   margin-top: 2rem;
 }
 
+.inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* .inputs-wrapper > div > input {
+  
+} */
+
+.inputs-wrapper > div > label {
+  margin-right: 1rem;
+}
+
 .button-wrapper {
   display: flex;
   flex-direction: column;

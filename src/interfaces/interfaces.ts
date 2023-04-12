@@ -3,9 +3,9 @@ export type NullableNumberType = number | null;
 export type SelectabeIndexType = { minor: number, major: number } | null;
 
 export type SettingsType = {
-  numbersCount: number,
-  minNumber: number,
-  maxNumber: number,
+  numberOfCells: number,
+  minNumberValue: number,
+  maxNumberValue: number,
 }
 
 export interface GameState {

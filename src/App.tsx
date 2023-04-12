@@ -9,7 +9,7 @@ function App() {
   
   return (
     <main>
-      <h1 className="game-title">Numbers Game</h1>
+      <h1 className="game-title">Order The Numbers</h1>
       { gameState?.initialized ? (
         <GameInitialized />
       ) : (

@@ -1,22 +1,21 @@
-import { NullableNumberType, SelectabeIndexType } from "./interfaces/interfaces";
+import { NullableNumberType, SelectabeIndexType, SettingsType } from "./interfaces/interfaces";
 
 export const getUniqueRandomNumber = (
   numbersList: NullableNumberType[],
-  minNumber: number, 
-  maxNumber: number,
-  numbersCount: number,
+  minNumberValue: number, 
+  maxNumberValue: number,
+  numberOfCells: number,
 ) => {
   let n: number;
+  const numbersRange = maxNumberValue - minNumberValue + 1;
   do {
-    n = Math.floor((Math.random() * maxNumber) + minNumber);
-  } while (numbersCount <= maxNumber && numbersList.includes(n));
+    n = Math.floor((Math.random() * numbersRange) + minNumberValue);
+  } while (numberOfCells <= numbersRange && numbersList.includes(n));
   return n;
 }
 
-export const getInitialNumbersList = (
-  numbersCount: number,
-) => {
-  return Array(numbersCount).fill(null);
+export const getInitialNumbersList = (numberOfCells: number) => {
+  return Array(numberOfCells).fill(null);
 }
 
 export const getSelectableIndex = (
@@ -57,4 +56,8 @@ export const getColumn = (
   length: number,
 ) => {
   return index < (length / 2) ? 'card-left' : 'card-right';
+}
+
+export const saveSettings = (settings: SettingsType) => {
+  localStorage.setItem('settings', JSON.stringify(settings));
 }

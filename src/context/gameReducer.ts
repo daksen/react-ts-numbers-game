@@ -1,4 +1,4 @@
-import { GameState, NullableNumberType, SelectabeIndexType } from "../interfaces/interfaces";
+import { GameState, NullableNumberType, SelectabeIndexType, SettingsType } from "../interfaces/interfaces";
 
 type GameAction =
   | { type: 'initGame', payload: { initialCurrentNumber: number, initialNumbersList: NullableNumberType[] }}
@@ -6,6 +6,7 @@ type GameAction =
   | { type: 'gameSttings' }
   | { type: 'setSelectableIndex', payload: { newSelectableIndex: SelectabeIndexType }}
   | { type: 'setIndexValue', payload: { newCurrentNumber: number, newNumbersList: NullableNumberType[] }}
+  | { type: 'setSettings', payload: { newSettings: SettingsType }}
 
 const gameReducer = (state: GameState, action: GameAction) => {
   switch (action.type) {
@@ -43,6 +44,11 @@ const gameReducer = (state: GameState, action: GameAction) => {
         selectableIndex: null,
         currentNumber: action.payload.newCurrentNumber,
         numbersList: action.payload.newNumbersList,
+      }
+    case 'setSettings':
+      return { 
+        ...state,
+        settings: action.payload.newSettings,
       }
     default:
       throw new Error('No valid action type.');

@@ -8,6 +8,9 @@ interface GameContextProps {
   gameSettings: () => void,
   setSelectableIndex: () => void,
   setIndexValue: (index: number) => void,
+  setNumberOfCells: (value: number) => void,
+  setMinNumberValue: (value: number) => void,
+  setMaxNumberValue: (value: number) => void,
 }
 
 const GameContext = createContext<GameContextProps>({} as GameContextProps);
